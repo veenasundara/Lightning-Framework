@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notify when application error occurs</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Application Error Notify</name>
+    <style>none</style>
+    <subject>Exception occurred in {!Application_Error__c.Process__c}</subject>
+    <textOnly>******* Exception Details *******
+Type: {!Application_Error__c.Type__c}
+Message: {!Application_Error__c.Message__c}
+Stack Trace: {!Application_Error__c.Stack_Trace__c}
+
+
+******* Breadcrumbs *******
+{!Application_Error__c.Breadcrumbs__c}
+
+
+******* User Details *******
+Name: {!Application_Error__c.Running_User_Name__c}
+Email: {!Application_Error__c.Running_User_Email__c}
+Id: {!Application_Error__c.Running_UserId__c}
+Role: {!Application_Error__c.Running_User_Role__c}
+Profile: {!Application_Error__c.Running_User_Profile__c}
+Title: {!Application_Error__c.Running_User_Title__c}
+
+
+******* Device Details *******
+Browser: {!Application_Error__c.Browser__c}
+Operating System: {!Application_Error__c.OS__c}
+Device: {!Application_Error__c.Device__c}
+
+
+******* Url Details *******
+Current Page: {!Application_Error__c.Current_Page__c}
+Headers: {!Application_Error__c.Page_Headers__c}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

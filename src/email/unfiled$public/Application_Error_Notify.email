@@ -1,0 +1,30 @@
+******* Exception Details *******<br>
+Type: {!Application_Error__c.Type__c}<br>
+Message: {!Application_Error__c.Message__c}<br>
+Stack Trace: {!Application_Error__c.Stack_Trace__c}<br>
+<br>
+<br>
+******* Breadcrumbs *******<br>
+{!Application_Error__c.Breadcrumbs__c}<br>
+<br>
+<br>
+******* User Details *******<br>
+Name: {!Application_Error__c.Running_User_Name__c}<br>
+Email: {!Application_Error__c.Running_User_Email__c}<br>
+Id: {!Application_Error__c.Running_UserId__c}<br>
+Role: {!Application_Error__c.Running_User_Role__c}<br>
+Profile: {!Application_Error__c.Running_User_Profile__c}<br>
+Title: {!Application_Error__c.Running_User_Title__c}<br>
+<br>
+<br>
+******* Device Details *******<br>
+Browser: {!Application_Error__c.Browser__c}<br>
+Operating System: {!Application_Error__c.OS__c}<br>
+Device: {!Application_Error__c.Device__c}<br>
+<br>
+<br>
+******* Url Details *******<br>
+Current Page: {!Application_Error__c.Current_Page__c}<br>
+Headers: {!Application_Error__c.Page_Headers__c}<br>
+<br>
+<br>
