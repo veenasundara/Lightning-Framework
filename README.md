@@ -3,10 +3,10 @@
 Contains the following items:
 <ul>
 	<li>
-		CmpBase - base Lightning Component that performas standard error handling. All Lightning Components must extend this component.
+		<b>CmpBase</b> - Base Lightning Component that performs standard error handling. <span style="color: blue;">All Lightning Components must extend this component</span>.
 	</li>
 	<li>
-		IntBase - Lightning Interface that all Lightning Components must implement. This contains the method named "init" that will be called by CmpBase once it has completed its init handling.  All components must create a handler for this method instead of using the standard Lightning "init" event.
+		<b>IntBase</b> - <span style="color: blue;">Lightning Interface that all Lightning Components must implement</span>. This contains the method named "init" that will be called by CmpBase once it has completed its init handling.  <span style="color: blue;">All components must create a handler for this method instead of using the standard Lightning "init" event</span>.
 	</li>
 	<li>
 		AuraReturn.cls - All Lightning controller methods must extend this class to use as a return value to the component. This class containsa member (auraerror) that the CmpBase component checks in order to check if errors occurred in the controller. When an exception, call the "handleException" method of this this class to populate auraerror with the exception message.
