@@ -3,7 +3,7 @@
 ## Main Components:
 <ul>
 	<li>
-		<b>CmpBase</b> - Base Lightning Component that performs standard error handling. <b>All Lightning Components must extend this component</b>.
+		<b>CmpBase</b> - Base Lightning Component that performs standard error handling. #### All Lightning Components must extend this component ####.
 	</li>
 	<li>
 		<b>IntBase<b> - <b>Lightning Interface that all Lightning Components must implement<b>. This contains the method named "init" that will be called by CmpBase once it has completed its init handling.  <b>All components must create a handler for this method instead of using the standard Lightning "init" event<b>.
