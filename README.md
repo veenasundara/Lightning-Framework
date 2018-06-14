@@ -1,5 +1,5 @@
 # Lightning-Framework
-Using a base Lightning Component, a Lightning interface, Apex Classes and an SObject to store apex errors, this framework provides a way to speed up lightning develpment while providing  
+Using a base Lightning Component, a Lightning interface, Apex Classes and an SObject to store apex errors, this framework provides a way to speed up lightning develpment while providing robust error handling that will aid debugging.
 
 
 ## Main Components:
