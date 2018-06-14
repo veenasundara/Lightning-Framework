@@ -1,7 +1,7 @@
 # Lightning-Framework
 
 ## Main Components:
-* <b>CmpBase</b> - Base Lightning Component that performs standard error handling. ### _All Lightning Components must extend this component_. 
+* <b>CmpBase</b> - Base Lightning Component that performs standard error handling. **_All Lightning Components must extend this component_**. 
 <ul>
 	<li>
 		<b>CmpBase</b> - Base Lightning Component that performs standard error handling. All Lightning Components must extend this component. 
