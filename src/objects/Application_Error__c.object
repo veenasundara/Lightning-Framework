@@ -54,8 +54,9 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Breadcrumbs__c</fullName>
+        <description>Debug statements leading up to the error</description>
         <externalId>false</externalId>
-        <inlineHelpText>What happened leading to error</inlineHelpText>
+        <inlineHelpText>Debug statements leading up to the error</inlineHelpText>
         <label>Breadcrumbs</label>
         <length>131072</length>
         <trackHistory>false</trackHistory>
@@ -150,7 +151,9 @@
     </fields>
     <fields>
         <fullName>Page_Headers__c</fullName>
+        <description>Visualforce page headers</description>
         <externalId>false</externalId>
+        <inlineHelpText>Visualforce page headers</inlineHelpText>
         <label>Page Headers</label>
         <length>32768</length>
         <trackHistory>false</trackHistory>
@@ -160,23 +163,16 @@
     </fields>
     <fields>
         <fullName>Process__c</fullName>
+        <description>Name of process exception was thrown from</description>
         <externalId>false</externalId>
         <inlineHelpText>Name of process exception was thrown from</inlineHelpText>
         <label>Process</label>
+        <length>100</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>SurpassAPI</fullName>
-                    <default>false</default>
-                    <label>SurpassAPI</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Running_User_Email__c</fullName>
@@ -254,7 +250,9 @@
     <fields>
         <fullName>Save_Until__c</fullName>
         <defaultValue>TODAY() + 30</defaultValue>
+        <description>Retain the record until this date</description>
         <externalId>false</externalId>
+        <inlineHelpText>Retain the record until this date</inlineHelpText>
         <label>Save Until</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -263,6 +261,7 @@
     </fields>
     <fields>
         <fullName>Stack_Trace__c</fullName>
+        <description>Where the exception occurred</description>
         <externalId>false</externalId>
         <inlineHelpText>Where the exception occurred</inlineHelpText>
         <label>Stack Trace</label>
@@ -274,6 +273,7 @@
     </fields>
     <fields>
         <fullName>Type__c</fullName>
+        <description>Exception type</description>
         <externalId>false</externalId>
         <inlineHelpText>Exception type</inlineHelpText>
         <label>Type</label>
@@ -315,29 +315,6 @@
     <pluralLabel>Application Errors</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
-        <fullName>Food_Safety</fullName>
-        <active>true</active>
-        <label>Food Safety</label>
-        <picklistValues>
-            <picklist>Log_Level__c</picklist>
-            <values>
-                <fullName>ERROR</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>WARNING</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Process__c</picklist>
-            <values>
-                <fullName>SurpassAPI</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
-    <recordTypes>
         <fullName>General</fullName>
         <active>true</active>
         <label>General</label>
@@ -349,13 +326,6 @@
             </values>
             <values>
                 <fullName>WARNING</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Process__c</picklist>
-            <values>
-                <fullName>SurpassAPI</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

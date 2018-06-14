@@ -126,7 +126,7 @@ public with sharing class Log
             ae.RecordTypeId = rti.getRecordTypeId();
         }
         ae.Log_Level__c = et.name();
-        ae.Process__c = processName;
+        //ae.Process__c = processName;
     }
 
 

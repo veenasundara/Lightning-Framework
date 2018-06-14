@@ -58,7 +58,6 @@ public class SchdDeleteApplicationErrorsTest {
         ae.Process__c = processName;
         ae.Stack_Trace__c = 'Test';
         ae.Browser__c = 'OS';
-        ae.RecordTypeId = SObjectType.Application_Error__c.getRecordTypeInfosByName().get('General').getRecordTypeId();
         ae.Current_Page__c = 'test';
         ae.Message__c = 'test';
         ae.Running_User__c = UserInfo.getUserId();

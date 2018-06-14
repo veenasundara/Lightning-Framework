@@ -49,7 +49,7 @@ public class CmpBaseCtrl {
             deviceInfo.handleException(e);
             if(notify)
             {
-                Log.notify(e, 'General', null, deviceInfo, Log.ErrorType.ERROR);
+                Log.notify(e, 'CmpBaseCrtl ctrlGetDeviceInformation', deviceInfo);
             }
         }
         return deviceInfo;

@@ -35,6 +35,10 @@
         <name>Layout</name>
     </types>
     <types>
+        <members>OpFocus_Lightning_Framework</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
         <members>Application_Error__c.Application_Error_Notify</members>
         <name>WorkflowAlert</name>
     </types>

@@ -39,14 +39,13 @@ public class LogTest {
             throw new LogTestException('Test');
         }
         catch(LogTestException e){
-            log.notify(e,'General','null', deviceInfo, Log.ErrorType.ERROR);
+            log.notify(e,'null', deviceInfo);
         }
 
-        Application_Error__c ae = [Select Id, Running_User__c, Type__c, RecordTypeId, Process__c from Application_Error__c];
+        Application_Error__c ae = [Select Id, Running_User__c, Type__c, Process__c from Application_Error__c];
         System.assertEquals(UserInfo.getUserId(),ae.Running_User__c);
         System.assertEquals('LogTest.LogTestException',ae.Type__c);
         System.assertEquals('null',ae.Process__c);
-        System.assertEquals(SObjectType.Application_Error__c.getRecordTypeInfosByName().get('General').getRecordTypeId(),ae.RecordTypeId);
 
         DeviceInformation lla2 = DeviceInformation.deserialize(JSON.serialize(deviceInfo));
         System.assert(deviceInfo.browser == lla2.browser);
