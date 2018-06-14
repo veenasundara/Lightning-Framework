@@ -32,7 +32,7 @@ instead of using the standard Lightning "init" event_**.
 
 * Optional Step - Normally, Application_Error__c records are deleted after 30 days.  If you want to change this, Edit the Application_Error__c object's field "Save Until". The default value for this field is set as "TODAY() + 30". Change this as desired to control how long Application_Error__c records are saved
 
-* If you are using an IDE that allows templates, create the following templates:
+* Use the templates below to begin coding. If you are using an IDE that allows templates, create these to speed your development:
 NOTE: I have used the format for Illuminated Cloud for variables
 
 #### Lightning Component Template
