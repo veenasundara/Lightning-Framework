@@ -103,6 +103,7 @@ public with sharing class ${NAME}
 {
     // All controller methods MUST include the deviceInfoStr parameter to pass to the
     // Log.notify() method to populate in Application_Error__c when exceptions occur
+    // All Lightning components must return a class that extends the AuraReturn Class
     @AuraEnabled
     public static ${LightningComponent}Return ctrlMethod(String deviceInfoStr)
     {
