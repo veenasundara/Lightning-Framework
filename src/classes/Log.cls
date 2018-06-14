@@ -68,6 +68,10 @@ public with sharing class Log
     {
         notify(errorMessage, errorRecTypeName, processName, null, et);
     }
+    public static void notify(String errorMessage, String processName)
+    {
+        notify(errorMessage, null, processName, null, ErrorType.ERROR);
+    }
     public static void notify(String errorMessage, String errorRecTypeName, String processName, DeviceInformation deviceInfo, ErrorType et)
     {
         startApplicationError(errorRecTypeName, processName, et);
@@ -85,6 +89,10 @@ public with sharing class Log
     {
         notify(e, errorRecTypeName, processName, null, et);
     }
+    public static void notify(Exception e, String processName)
+    {
+        notify(e, null, processName, null, ErrorType.ERROR);
+    }
 
     /**
      * sends email on error to email addresses defined in given app's custom metadta settings
@@ -97,6 +105,10 @@ public with sharing class Log
         log('exception: ' + e.getMessage() + ' :: ' + e.getStackTraceString());
         startApplicationError(errorRecTypeName, processName, et);
         createApplicationError(e,deviceInfo);
+    }
+    public static void notify(Exception e, String processName, DeviceInformation deviceInfo)
+    {
+        notify(e, null, processName, deviceInfo, ErrorType.ERROR);
     }
 
     /**
