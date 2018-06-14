@@ -124,6 +124,7 @@ public with sharing class ${NAME}
         return retVal;
     }
 
+    // All Lightning components must return a class that extends the AuraReturn Class
     public class ${LightningComponent}Return extends AuraReturn
     {
         // ADD MEMBERS FOR YOUR RETURN VALUES HERE
