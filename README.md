@@ -49,10 +49,19 @@ instead of using the standard Lightning "init" event_**.
 
     <!-- method called after CmpBase completes its init -->
     <!-- Use this instead of handling the Lightning event "init" -->
-    <aura:method name="init" action="{!c.doInit}">
+    <aura:method name="init">
     </aura:method>
 
 </aura:component>
+```
+
+#### Lightning Javascript Controller Template
+```
+({
+    init : function(component, event helper) {
+    	// DO YOUR INIT PROCESSING HERE
+    },
+})
 ```
 
 #### Lightning Helper Template
@@ -122,7 +131,7 @@ public with sharing class CompCtrl
             retVal.handleException(e); 
 
             // Creates an Application_Error__c record which will cause email to be sent
-            Log.notify(e, null, '${NAME}', DeviceInformation.deserialize(deviceInfoStr), Log.ErrorType.ERROR);
+            Log.notify(e, 'CompCtrl', DeviceInformation.deserialize(deviceInfoStr));
         }
         return retVal;
     }
