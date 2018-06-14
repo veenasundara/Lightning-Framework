@@ -60,6 +60,7 @@ instead of using the standard Lightning "init" event_**.
 ({
     init : function(component, event helper) {
     	// DO YOUR INIT PROCESSING HERE
+    	helper.hlpInit(component);
     },
 })
 ```
@@ -67,7 +68,7 @@ instead of using the standard Lightning "init" event_**.
 #### Lightning Helper Template
 ```
 ({
-    hlpMethod : function(component) {
+    hlpInit : function(component) {
 
         try
         {
@@ -78,7 +79,9 @@ instead of using the standard Lightning "init" event_**.
 
             var action = component.get('c.ctrlMethod');
             action.setParams({
-                                 'deviceInfoStr' : JSON.stringify(component.get('v.deviceinfo'))
+                                 'deviceInfoStr' : JSON.stringify(component.get('v.deviceinfo')) 
+                                 // add other parameters as required for your processing
+
                              });
 
             action.setCallback(this,function(result)
@@ -98,7 +101,7 @@ instead of using the standard Lightning "init" event_**.
         {
     	    // CmpBase method that will show an error toast. If you do not want it to
     	    // stick, eliminate the second argument
-            component.error('hlpMethod - ' + e.message, 'sticky');
+            component.error('hlpInit - ' + e.message, 'sticky');
         }
     },
 })
