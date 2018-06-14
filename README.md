@@ -2,7 +2,7 @@
 
 ## Main Components:
 <ul>
-	#### All Lightning Components must extend this component ####
+	### All Lightning Components must extend this component
 	<li>
 		<b>CmpBase</b> - Base Lightning Component that performs standard error handling. 
 	</li>
