@@ -18,7 +18,7 @@ instead of using the standard Lightning "init" event_**.
 
 * Application_Error__c SObject. The **_Log.notify()_** method creates records in this Object when exceptions occur. Contains information about the running user, the user's device, debug statements that have been logged using the **_Log.log()_** method, and the details of the exception.  
 
-* Application__Error_c.Application Error Notify - Workflow Rule. When an Application_Error__c record is created, this rule causes an email to fire. **_NOTE - modify this rule to include the recipients and change sender if required._**
+* Application__Error_c.Application Error Notify - Workflow Rule. When an Application_Error__c record is created, this rule causes an email to fire. **_NOTE - modify this rule to set up the recipients (and change sender if required)._**
 
 ## Install Steps:
 * Use the botton below to deploy the code to your org:
