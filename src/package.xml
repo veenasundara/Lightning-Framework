@@ -2,6 +2,7 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
         <members>AuraReturn</members>
+        <members>AuraReturnTest</members>
         <members>CmpBaseCtrl</members>
         <members>CmpBaseCtrlTest</members>
         <members>DeviceInformation</members>

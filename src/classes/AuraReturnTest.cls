@@ -14,22 +14,36 @@
 * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 *
 *
- */
+*/
 
 /*
-** Base class for Lightning Apex Controller return value
+** Unit test for AuraReturn
 */
-global virtual class AuraReturn
+@isTest
+public class AuraReturnTest
 {
-    @AuraEnabled global String auraerror;
 
-    public void handleException(Exception e)
+    @testSetup static void buildData()
     {
-        auraerror = e.getMessage();
     }
 
-    public void setError(String message)
+    //test methods
+
+    static testMethod void myTest1()
     {
-        auraerror = message;
+        AuraReturn ret = new AuraReturn();
+        ret.setError('Test Error');
+        system.assertEquals('Test Error', ret.auraerror);
+        ret.auraerror = null;
+        try
+        {
+            throw new AuraHandledException('Test Error');
+        }
+        catch(Exception ex)
+        {
+            ret.handleException(ex);
+        }
+        system.assertNotEquals(null, ret.auraerror);
     }
+
 }
