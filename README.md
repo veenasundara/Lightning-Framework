@@ -77,7 +77,7 @@ instead of using the standard Lightning "init" event_**.
             // This should be passed to ALL controller methods to be populated
             // in the Application_Error__c record if exceptions occur
 
-            var action = component.get('c.ctrlMethod');
+            var action = component.get('c.ctrlInit');
             action.setParams({
                                  'deviceInfoStr' : JSON.stringify(component.get('v.deviceinfo')) 
                                  // add other parameters as required for your processing
@@ -119,7 +119,7 @@ public with sharing class CompCtrl
     // Log.notify() method to populate in Application_Error__c when exceptions occur.
     // All Lightning components must return a class that extends the AuraReturn Class
     @AuraEnabled
-    public static CompReturn ctrlMethod(String deviceInfoStr)
+    public static CompReturn ctrlInit(String deviceInfoStr)
     {
         CompReturn retVal = new CompReturn();
         try
@@ -134,7 +134,7 @@ public with sharing class CompCtrl
             retVal.handleException(e); 
 
             // Creates an Application_Error__c record which will cause email to be sent
-            Log.notify(e, 'CompCtrl', DeviceInformation.deserialize(deviceInfoStr));
+            Log.notify(e, 'CompCtrl ctrlInit', DeviceInformation.deserialize(deviceInfoStr));
         }
         return retVal;
     }
