@@ -51,3 +51,36 @@ NOTE: I have used the format for Illuminated Cloud for variables
 
 </aura:component>
 ```
+
+#### Lightning Apex Controller Template
+```
+/* Class:       ${NAME}
+** Created by:  YOUR NAME HERE on ${DATE}
+** Description: Controller for Lightning Component ${LightningComponent}
+*/
+public with sharing class ${NAME}
+{
+    @AuraEnabled
+    public static ${LightningComponent}Return ctrlMethod(String deviceInfoStr)
+    {
+        ${LightningComponent}Return retVal = new ${LightningComponent}Return();
+        try
+        {
+            // ADD YOUR CODE HERE
+            
+            return retVal;
+        }
+        catch(Exception e)
+        {
+            retVal.handleException(e);
+            Log.notify(e, null, '${NAME}', DeviceInformation.deserialize(deviceInfoStr), Log.ErrorType.ERROR);
+        }
+        return retVal;
+    }
+
+    public class ${LightningComponent}Return extends AuraReturn
+    {
+        // ADD MEMBERS FOR YOUR RETURN VALUES HERE
+    }
+}
+```
