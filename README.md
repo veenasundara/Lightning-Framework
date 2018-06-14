@@ -1,4 +1,6 @@
 # Lightning-Framework
+Using a base Lightning Component, a Lightning interface, Apex Classes and an SObject to store apex errors, this framework provides a way to speed up lightning develpment while providing  
+
 
 ## Main Components:
 * CmpBase - Base Lightning Component that performs standard error handling. **_All Lightning Components must extend this component_**. 
@@ -6,7 +8,7 @@
 * IntBase - **_Lightning Interface that all Lightning Components must implement_**. This contains the method named **_"init"_** that will be called by CmpBase once it has completed its init handling.  **_All components must create a handler for this method 
 instead of using the standard Lightning "init" event_**.
 
-* AuraReturn.cls - **_All Lightning controller methods must extend this class to use as a return value to the component._** This class containsa member **_(auraerror)_** that the CmpBase component checks in order to see if errors occurred in the controller. When an exception occurs, call the **_"handleException"_** method of this this class to populate auraerror with the exception message.
+* AuraReturn.cls - **_All Lightning controller methods must extend this class to use as a return value to the component._** This class contains a member **_(auraerror)_** that the CmpBase component checks in order to see if errors occurred in the controller. When an exception occurs, call the **_"handleException"_** method of this this class to populate auraerror with the exception message.
 
 * Log.cls - Class that has methods for logging messages and handling exceptions.  When exceptions occur, call the **_Log.notify()_** method. This will create a record in the Application_Error__c object which has a workflow and email alert set up to send emails.  Instead of **_System.debug()_**, use the **_Log.log()_** method. This will do the System.debug(), but also store the messages so that they can be seen on the Application_Error__c record and in the email sent.
 
@@ -34,16 +36,14 @@ instead of using the standard Lightning "init" event_**.
 
 * In your Lightning components that are developed using this framework, use the method **_component.success(message, mode)_** in yout helper to display success toasts. Values for mode are the same as for the force:showToast event (pester','sticky','dismissible'). 'dismissible' is the default, so if you want that mode, you do not need to pass the second argument (**_component.success(message)_**). Similary, to show error toasts, use the method **_component.error(message, mode)_**.
 
-* Use the templates below to begin coding. If you are using an IDE that allows templates, create these to speed your development:
-NOTE: I have used the format for Illuminated Cloud for variables
+* Use the templates below to begin coding. 
 
 #### Lightning Component Template
 ```
-<!-- Component: 	${NAME} -->
-<!-- Created by: 	YOUR NAME HERE on ${DATE} -->
+<!-- Component: 	 -->
+<!-- Created by: 	YOUR NAME HERE on <Date> -->
 <!-- Description: 	 -->
-<aura:component description="${NAME}"
-                extends="c:CmpBase" <!-- Base Component that performs error handling -->
+<aura:component extends="c:CmpBase" <!-- Base Component that performs error handling -->
                 implements="c:Intbase" <!-- Interface that defines init method that CmpBase calls after it completes its "init" work -->
                 access="global">
 
@@ -97,19 +97,19 @@ NOTE: I have used the format for Illuminated Cloud for variables
 
 #### Lightning Apex Controller Template
 ```
-/* Class:       ${NAME}
-** Created by:  YOUR NAME HERE on ${DATE}
-** Description: Controller for Lightning Component ${LightningComponent}
+/* Class:       
+** Created by:  YOUR NAME HERE on <Date>
+** Description: Controller for Lightning Component <Lightning Component Name>
 */
-public with sharing class ${NAME}
+public with sharing class CompCtrl
 {
     // All controller methods MUST include the deviceInfoStr parameter to pass to the
     // Log.notify() method to populate in Application_Error__c when exceptions occur
     // All Lightning components must return a class that extends the AuraReturn Class
     @AuraEnabled
-    public static ${LightningComponent}Return ctrlMethod(String deviceInfoStr)
+    public static CompReturn ctrlMethod(String deviceInfoStr)
     {
-        ${LightningComponent}Return retVal = new ${LightningComponent}Return();
+        CompReturn retVal = new CompReturn();
         try
         {
             // ADD YOUR CODE HERE
@@ -128,7 +128,7 @@ public with sharing class ${NAME}
     }
 
     // All Lightning components must return a class that extends the AuraReturn Class
-    public class ${LightningComponent}Return extends AuraReturn
+    public class CompReturn extends AuraReturn
     {
         // ADD MEMBERS FOR YOUR RETURN VALUES HERE
     }
