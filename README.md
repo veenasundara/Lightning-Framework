@@ -28,6 +28,8 @@ instead of using the standard Lightning "init" event_**.
        src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/src/main/webapp/resources/img/deploy.png">
 </a>
 
+* Assign permission set **_OpFocus Lightning Framework_** to users who will view the Applcation_Error__c Object and run the scheduled job to clear errors
+
 * Edit the **_Application__Error_c.Application Error Notify_** Workflow Rule to set up the recipients and sender for the email alert. These recipients will receive errors when Application_Error__c records with **_Log Level_** of **_ERROR_** are created.
 
 * Schedule the apex class **_SchdDeleteApplicationErrors_**. Do this manually from the UI, or run **_SchdDeleteApplicationErrors.schedule()_** from anonymous apex to have it run at 1 am every night. (You can use **_SchdDeleteApplicationErrors.manual()_** to run it one time manually from anonymous apex).
