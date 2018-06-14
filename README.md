@@ -52,6 +52,39 @@ NOTE: I have used the format for Illuminated Cloud for variables
 </aura:component>
 ```
 
+#### Lightning Helper Template
+```
+({
+    hlpMethod : function(component) {
+
+        try
+        {
+            var action = component.get('c.ctrlMethod');
+            action.setParams({
+                                 'deviceInfoStr' : JSON.stringify(component.get('v.deviceinfo'))
+                             });
+
+            action.setCallback(this,function(result)
+            {
+                if(!component.successfulResponse(result))
+                {
+                    return;
+                }
+
+                var resp = result.getReturnValue();
+
+            });
+
+            $A.enqueueAction(action);
+        }
+        catch(e)
+        {
+            component.error('hlpMethod - ' + e.message, 'sticky');
+        }
+    },
+})
+```
+
 #### Lightning Apex Controller Template
 ```
 /* Class:       ${NAME}
