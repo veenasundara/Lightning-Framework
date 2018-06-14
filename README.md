@@ -26,13 +26,28 @@ instead of using the standard Lightning "init" event_**.
        src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/src/main/webapp/resources/img/deploy.png">
 </a>
 
-* Edit the Application__Error_c.Appliction Error Notify Workflow Rule to set up the recipients and sender for the email alert
+* Edit the Application__Error_c.Appliction Error Notify Workflow Rule to set up the recipients and sender for the email alert. These recipients will receive errors when Application_Errir__c records with "Log Level" of ERROR are created.
 
 * Schedule the apex class SchdDeleteApplicationErrors. Do this manually from the UI, or run **_SchdDeleteApplicationErrors.schedule()_** from anonymous apex to have it run at 1 am every night. (You can use **_SchdDeleteApplicationErrors.manual()_** to run it one time manually from anonymous apex.)
 
 * Optional Step - Normally, Application_Error__c records are deleted after 30 days.  If you want to change this, Edit the Application_Error__c object's field "Save Until". The default value for this field is set as "TODAY() + 30". Change this as desired to control how long Application_Error__c records are saved
 
 * If you are using an IDE that allows templates, create the following templates:
+NOTE: I have used the format for Illuminated Cloud for variables
 
 #### Lightning Component Template
+```
+<!-- Component: 	${NAME} -->
+<!-- Created by: 	YOUR NAME HERE on ${DATE} -->
+<!-- Description: 	 -->
+<aura:component description="${NAME}"
+                extends="c:CmpBase"
+                implements="c:Intbase"
+                access="global">
 
+    <!-- method called after CmpBase completes its init -->
+    <aura:method name="init" action="{!c.doInit}">
+    </aura:method>
+
+</aura:component>
+```
