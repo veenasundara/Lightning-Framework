@@ -35,10 +35,6 @@
         <name>Layout</name>
     </types>
     <types>
-        <members>Admin</members>
-        <name>Profile</name>
-    </types>
-    <types>
         <members>Application_Error__c.Application_Error_Notify</members>
         <name>WorkflowAlert</name>
     </types>
