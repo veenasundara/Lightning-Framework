@@ -62,8 +62,8 @@ NOTE: I have used the format for Illuminated Cloud for variables
         {
         // deviceinfo is an attribute of CmpBase that contains information
         // about the running users device (browser, OS, etc.)
-        // This should be passed to ALL controller methods to be populated
-        // in the Application_Error__c record if exceptions occur
+            // This should be passed to ALL controller methods to be populated
+            // in the Application_Error__c record if exceptions occur
 
             var action = component.get('c.ctrlMethod');
             action.setParams({
