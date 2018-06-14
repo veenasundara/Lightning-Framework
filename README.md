@@ -32,7 +32,7 @@ instead of using the standard Lightning "init" event_**.
 
 * Optional Step - Normally, Application_Error__c records are deleted after 30 days.  If you want to change this, Edit the Application_Error__c object's field "Save Until". The default value for this field is set as "TODAY() + 30". Change this as desired to control how long Application_Error__c records are saved
 
-* In your Lightning components that are developed using this framework, use the method **_component.success(message, mode)_** in yout helper to display success toasts. Values for mode are the same as for the force:showToast event (pester','sticky','dismissible'). 'dismissible' is the default, so if you want that mode, do not pass the second argument. Similary, to show error toasts, use the method **_component.error(message, mode)_**.
+* In your Lightning components that are developed using this framework, use the method **_component.success(message, mode)_** in yout helper to display success toasts. Values for mode are the same as for the force:showToast event (pester','sticky','dismissible'). 'dismissible' is the default, so if you want that mode, you do not need to pass the second argument (**_component.success(message)_**). Similary, to show error toasts, use the method **_component.error(message, mode)_**.
 
 * Use the templates below to begin coding. If you are using an IDE that allows templates, create these to speed your development:
 NOTE: I have used the format for Illuminated Cloud for variables
