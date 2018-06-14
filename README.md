@@ -41,11 +41,12 @@ NOTE: I have used the format for Illuminated Cloud for variables
 <!-- Created by: 	YOUR NAME HERE on ${DATE} -->
 <!-- Description: 	 -->
 <aura:component description="${NAME}"
-                extends="c:CmpBase"
-                implements="c:Intbase"
+                extends="c:CmpBase" <!-- Base Component that performs error handling -->
+                implements="c:Intbase" <!-- Interface that defines init method that CmpBase calls after it completes its "init" work -->
                 access="global">
 
     <!-- method called after CmpBase completes its init -->
+    <!-- Use this instead of handling the Lightning event "init" -->
     <aura:method name="init" action="{!c.doInit}">
     </aura:method>
 
@@ -59,6 +60,11 @@ NOTE: I have used the format for Illuminated Cloud for variables
 
         try
         {
+        	// deviceinfo is an attribute of CmpBase that contains information
+        	// about the running users device (browser, OS, etc.)
+        	// This should be passed to ALL controller methods to be populated
+        	// in the Application_Error__c record if exceptions occur
+
             var action = component.get('c.ctrlMethod');
             action.setParams({
                                  'deviceInfoStr' : JSON.stringify(component.get('v.deviceinfo'))
@@ -66,7 +72,7 @@ NOTE: I have used the format for Illuminated Cloud for variables
 
             action.setCallback(this,function(result)
             {
-                if(!component.successfulResponse(result))
+                if(!component.successfulResponse(result)) // CmpBase method that performs error handling
                 {
                     return;
                 }
@@ -79,6 +85,8 @@ NOTE: I have used the format for Illuminated Cloud for variables
         }
         catch(e)
         {
+        	// CmpBase method that will show an error toast. If you do not want it to
+        	// stick, eliminate the second argument
             component.error('hlpMethod - ' + e.message, 'sticky');
         }
     },
@@ -93,6 +101,8 @@ NOTE: I have used the format for Illuminated Cloud for variables
 */
 public with sharing class ${NAME}
 {
+    // All controller methods MUST include the deviceInfoStr parameter to pass to the
+    // Log.notify() method to populate in Application_Error__c when exceptions occur
     @AuraEnabled
     public static ${LightningComponent}Return ctrlMethod(String deviceInfoStr)
     {
@@ -105,7 +115,10 @@ public with sharing class ${NAME}
         }
         catch(Exception e)
         {
-            retVal.handleException(e);
+        	// Populates auraerror which is used by CmpBase to detect errors
+            retVal.handleException(e); 
+
+            // Creates an Application_Error__c record which will cause email to be sent
             Log.notify(e, null, '${NAME}', DeviceInformation.deserialize(deviceInfoStr), Log.ErrorType.ERROR);
         }
         return retVal;
