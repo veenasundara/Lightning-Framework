@@ -155,7 +155,7 @@
      */
     hlpShowToast : function(ttype, message, mode)
     {
-        var toastEvent = $A.get("e.force:hlpShowToast");
+        var toastEvent = $A.get("e.force:showToast");
         toastEvent.setParams({
                                  "type": ttype,
                                  "mode": mode || "dismissible",
