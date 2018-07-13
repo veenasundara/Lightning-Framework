@@ -37,8 +37,7 @@
                 return;
             }
             component.set('v.deviceinfo',result.getReturnValue());
-            console.log('deviceinfo = ' + JSON.stringify(component.get("v.deviceinfo")));
-            //component.set('v.baseInitDone', true); // This will let sub component know that it can perform its init
+            //console.log('deviceinfo = ' + JSON.stringify(component.get("v.deviceinfo")));
             component.getConcreteComponent().init(); // this is in IntBase interface that all components must implement
         });
 
@@ -162,6 +161,21 @@
                                  "message": message
                              });
         toastEvent.fire();
-    }
+    },
 
+    /**
+     * show the spinner
+     * @param component
+     */
+    hlpShowSpinner : function(component) {
+        component.set("v.spinnerClass", '');
+    },
+
+    /**
+     * hide the spinner
+     * @param component
+     */
+    hlpHideSpinner : function(component) {
+        component.set("v.spinnerClass", 'slds-hide');
+    },
 })

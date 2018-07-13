@@ -38,8 +38,15 @@
 
     // displays error toast
     error : function(component, event, helper){
-        console.log('in error')
         var m = event.getParam('arguments').msg;
         helper.hlpShowError(m);
-    }
+    },
+
+    showSpinner : function(component, event, helper){
+        helper.hlpShowSpinner(component);
+    },
+
+    hideSpinner : function(component, event, helper){
+        helper.hlpHideSpinner(component);
+    },
 })
