@@ -153,20 +153,20 @@ public with sharing class CompCtrl
 
 #### Available Methods
 
-success(msg [,toastMode])         => success toast message
-info(msg [,toastMode])            => info toast message
-warn(msg [,toastMode])            => warning toast message
-error(msg [,toastMode])           => error toast message
-showSpinner(size)                 => shows lightning spinner
-hideSpinner()                     => hides lightning spinner
-setAction(action)                 => sets server-side controller method
-setParams(params)                 => sets action parameters
-setCallback([onsuccess, onfail])  => sets function callbacks after server response is parsed
-run()                             => enqueues action to server
+*success(msg [,toastMode])         => success toast message
+*info(msg [,toastMode])            => info toast message
+*warn(msg [,toastMode])            => warning toast message
+*error(msg [,toastMode])           => error toast message
+*showSpinner(size)                 => shows lightning spinner
+*hideSpinner()                     => hides lightning spinner
+*setAction(action)                 => sets server-side controller method
+*setParams(params)                 => sets action parameters
+*setCallback([onsuccess, onfail])  => sets function callbacks after server response is parsed
+*run()                             => enqueues action to server
 
 
 #### Available Attributes
-keepSpinnerInside (boolean)       => Keeps the lightning spinner inside the component body. defaults to true
-spinner (boolean)                 => Whether to use spinner when waiting for response from server. defaults to true
-deviceInfoName (string)           => Name of the server method parameter for device information json string. defaults to "deviceInfoStr"
-toastMode (string)                => defaulted toast message mode. defaults to "sticky"
+*keepSpinnerInside (boolean)       => Keeps the lightning spinner inside the component body. defaults to true
+*spinner (boolean)                 => Whether to use spinner when waiting for response from server. defaults to true
+*deviceInfoName (string)           => Name of the server method parameter for device information json string. defaults to "deviceInfoStr"
+*toastMode (string)                => defaulted toast message mode. defaults to "sticky"
