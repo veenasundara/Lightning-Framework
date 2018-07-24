@@ -49,11 +49,8 @@ instead of using the standard Lightning "init" event_**.
                 implements="c:Intbase" <!-- Interface that defines init method that CmpBase calls after it completes its "init" work -->
                 access="global">
 
-    <!-- method called after CmpBase completes its init -->
-    <!-- Use this instead of handling the Lightning event "init" -->
-    <aura:method name="init">
-    </aura:method>
-
+    <!-- default toast message mode to "dismissable" -->
+    <aura:attribute name="toastMode" type="String" default="dismissable"/>
 </aura:component>
 ```
 
@@ -73,31 +70,25 @@ instead of using the standard Lightning "init" event_**.
     hlpInit : function(component) {
 
         try
-        {
-            // deviceinfo is an attribute of CmpBase that contains information
-            // about the running users device (browser, OS, etc.)
-            // This should be passed to ALL controller methods to be populated
-            // in the Application_Error__c record if exceptions occur
+        {   
+            // set server-side method
+            component.setAction(component.get('c.ctrlInit'));
 
-            var action = component.get('c.ctrlInit');
-            action.setParams({
-                                 'deviceInfoStr' : JSON.stringify(component.get('v.deviceinfo')) 
-                                 // add other parameters as required for your processing
-
-                             });
-
-            action.setCallback(this,function(result)
-            {
-                if(!component.successfulResponse(result)) // CmpBase method that performs error handling
-                {
-                    return;
+            // set callbacks
+            component.setCallback(
+                // successful callback
+                function(cmp, res){
+                    this.handleSuccessInitResult(cmp, res);
+                },
+                // error callback
+                function(cmp, res){
+                    this.handleErrorInitResult(cmp, res);
                 }
+            )
 
-                var resp = result.getReturnValue();
-
-            });
-
-            $A.enqueueAction(action);
+            // fire server-side method
+            component.run();
+            
         }
         catch(e)
         {
@@ -106,6 +97,17 @@ instead of using the standard Lightning "init" event_**.
             component.error('hlpInit - ' + e.message, 'sticky');
         }
     },
+
+    handleSuccessInitResult(component, result)
+    {
+        component.success('Success!', 'dismissable')
+        // handle result from server
+    },
+
+    handleErrorInitResult(component, result)
+    {
+        // handle result from server
+    }
 })
 ```
 
@@ -148,3 +150,23 @@ public with sharing class CompCtrl
     }
 }
 ```
+
+#### Available Methods
+
+success(msg [,toastMode])         => success toast message
+info(msg [,toastMode])            => info toast message
+warn(msg [,toastMode])            => warning toast message
+error(msg [,toastMode])           => error toast message
+showSpinner(size)                 => shows lightning spinner
+hideSpinner()                     => hides lightning spinner
+setAction(action)                 => sets server-side controller method
+setParams(params)                 => sets action parameters
+setCallback([onsuccess, onfail])  => sets function callbacks after server response is parsed
+run()                             => enqueues action to server
+
+
+#### Available Attributes
+keepSpinnerInside (boolean)       => Keeps the lightning spinner inside the component body. defaults to true
+spinner (boolean)                 => Whether to use spinner when waiting for response from server. defaults to true
+deviceInfoName (string)           => Name of the server method parameter for device information json string. defaults to "deviceInfoStr"
+toastMode (string)                => defaulted toast message mode. defaults to "sticky"
