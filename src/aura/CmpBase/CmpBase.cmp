@@ -15,19 +15,27 @@
 *
 *
 */-->
-<!-- Description: 	Base component that provides uniform error handling. All lightning components must extend this one -->
+<!-- Description:   Base component that provides uniform error handling. All lightning components must extend this one -->
 <aura:component description="CmpBase"
                 extensible="true"
                 abstract="true"
                 access="GLOBAL"
                 controller="CmpBaseCtrl">
+
     <!-- global attributes -->
     <aura:attribute name="devicetype" type="String" access="GLOBAL" description="PHONE/TABLET/DESKTOP"/>
     <aura:attribute name="deviceinfo" type="DeviceInformation" access="GLOBAL" description="details about device and broswer"/>
     <aura:attribute name="notifyOnError" type="Boolean" default="TRUE" access="GLOBAL" description="Determines if an email notification should be sent out if this component breaks"/>
+    <aura:attribute name="actionParams" type="Object" access="GLOBAL" description="Object of parameters to send to server controller methods"/>
+    <aura:attribute name="action" type="Object" access="GLOBAL" description=""/>
+    <aura:attribute name="singleExecution" type="Boolean" access="GLOBAL" default="false" description=""/>
+    <aura:attribute name="onsuccess" type="Object" required="false" access="GLOBAL"/>
+    <aura:attribute name="onfail" type="Object" required="false" access="GLOBAL"/>
 
-    <!-- private attributes -->
-    <aura:attribute name="spinnerClass" type="String" default="slds-hide" access="GLOBAL" description="class for spinner"/>
+    <aura:attribute name="keepSpinnerInside" type="Boolean" default="true"/>
+    <aura:attribute name="spinner" type="Boolean" default="true"/>
+    <aura:attribute name="deviceinfoName" type="String" default="deviceInfoStr"/>
+    <aura:attribute name="toastMode" type="String" default="sticky"/>
 
     <!-- init handler -->
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
@@ -42,22 +50,59 @@
     <aura:method name="success" access="GLOBAL" description="displays success toast">
         <aura:attribute name="msg" type="String" required="true" access="GLOBAL"/>
         <aura:attribute name="mode" type="String" required="false" access="GLOBAL"/>
+        <aura:attribute name="duration" type="Integer" required="false" access="GLOBAL"/>
     </aura:method>
 
     <aura:method name="error" access="GLOBAL" description="displays error toast">
         <aura:attribute name="msg" type="String" required="true" access="GLOBAL"/>
         <aura:attribute name="mode" type="String" required="false" access="GLOBAL"/>
+        <aura:attribute name="duration" type="Integer" required="false" access="GLOBAL"/>
+    </aura:method>
+
+    <aura:method name="warn" access="GLOBAL" description="displays warn toast">
+        <aura:attribute name="msg" type="String" required="true" access="GLOBAL"/>
+        <aura:attribute name="mode" type="String" required="false" access="GLOBAL"/>
+        <aura:attribute name="duration" type="Integer" required="false" access="GLOBAL"/>
+    </aura:method>
+
+    <aura:method name="info" access="GLOBAL" description="displays info toast">
+        <aura:attribute name="msg" type="String" required="true" access="GLOBAL"/>
+        <aura:attribute name="mode" type="String" required="false" access="GLOBAL"/>
+        <aura:attribute name="duration" type="Integer" required="false" access="GLOBAL"/>
     </aura:method>
 
     <aura:method name="showSpinner" access="GLOBAL" description="displays spinner">
+        <aura:attribute name="size" type="String" required="false" access="GLOBAL"/>
     </aura:method>
 
-    <aura:method name="hideSpinner" access="GLOBAL" description="hides spinner">
+    <aura:method name="hideSpinner" access="GLOBAL" description="hides spinner"/>
+
+    <aura:method name="setAction" access="GLOBAL">
+        <aura:attribute name="serverAction" type="Object" required="true" access="GLOBAL"/>
     </aura:method>
+
+    <aura:method name="setParams" access="GLOBAL">
+        <aura:attribute name="params" type="Object" required="true" access="GLOBAL"/>
+    </aura:method>
+
+    <aura:method name="setCallback" access="GLOBAL">
+        <aura:attribute name="successcb" type="Object" access="GLOBAL"/>
+        <aura:attribute name="failcb" type="Object" access="GLOBAL"/>
+    </aura:method>
+
+    <aura:method name="run" access="GLOBAL"/>
+    <aura:method name="reset" access="GLOBAL"/>
 
     <!-- Extending component body -->
     <div>
-        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="{!v.spinnerClass}" alternativeText="waiting"/>
+        <div aura:id="notifications">
+            <lightning:notificationsLibrary aura:id="notifierlib" />
+        </div>
+        <aura:renderIf isTrue="{!v.spinner}">
+            <div style="{!v.keepSpinnerInside ? 'position: relative;' : ''}">
+                <lightning:spinner aura:id="mySpinner" variant="brand" class="{! 'slds-hide ' + (v.keepSpinnerInside ? 'contain-spinner' : '')}" alternativeText="waiting"/>
+            </div>
+        </aura:renderIf>
         {!v.body}
     </div>
 

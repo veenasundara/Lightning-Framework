@@ -33,10 +33,13 @@
                          })
 
         action.setCallback(this,function(result){
-            if(!this.hlpCheckForError(result)){
+            if(!this.hlpCheckForError(component, result, component.get('v.toastMode'))){
                 return;
             }
-            component.set('v.deviceinfo',result.getReturnValue());
+            var res = result.getReturnValue();
+            component.set('v.deviceinfo',res);
+            // console.log('init done');
+            this.initActionObject(component);
             //console.log('deviceinfo = ' + JSON.stringify(component.get("v.deviceinfo")));
             component.getConcreteComponent().init(); // this is in IntBase interface that all components must implement
         });
@@ -85,7 +88,7 @@
      * @param mode [mode for displaying toast]
      * @return {[type]}          [Pass/Fail]
      */
-    hlpCheckForError : function(response, mode) {
+    hlpCheckForError : function(cmp, response, mode) {
         try
         {
             var state = response.getState();
@@ -100,20 +103,20 @@
                         if (errors[0] && errors[0].message)
                         {
                             unknownError = false;
-                            this.hlpShowError(errors[0].message, mode);
+                            this.hlpShowToast(cmp,'Error', {'msg' : errors[0].message, 'mode' : mode});
                         }
                     }
                 }
                 if(unknownError)
                 {
-                    this.hlpShowError('Unknown error from Apex class', mode);
+                    this.hlpShowToast(cmp, 'Error', {'msg' : 'Unknown error from Apex class', 'mode' : mode});
                 }
                 return false;
             }
             else if(response.getReturnValue() != undefined){
                 var r = response.getReturnValue();
                 if(r.hasOwnProperty('auraerror')){
-                    this.hlpShowError(r.auraerror, mode)
+                    this.hlpShowToast(cmp, 'Error', {'msg' : r.auraerror, 'mode' : mode})
                     return false;
                 }
             }
@@ -121,30 +124,11 @@
         }
         catch(e)
         {
-            this.hlpShowError(e.message, mode);
+            this.hlpShowToast(cmp, 'Error', {'msg' : e.message, 'mode' : mode});
             return false;
         }
     },
 
-    /**
-     * fires toast event for errors
-     * @param  {[type]} message [error message]
-     * @param  {[type]} mode    [toast mode]
-     * @return {[type]}         [description]
-     */
-    hlpShowError : function(message, mode){
-        this.hlpShowToast('Error',message, mode)
-    },
-
-    /**
-     * fires toast event for successes
-     * @param  {[type]} message [success message]
-     * @param  {[type]} mode    [toast mode]
-     * @return {[type]}         [description]
-     */
-    hlpShowSuccess : function(message, mode){
-        this.hlpShowToast('Success',message, mode)
-    },
 
     /**
      * fires toast events
@@ -152,30 +136,43 @@
      * @param  {[type]} mode    [toast mode]
      * @return {[type]}         [description]
      */
-    hlpShowToast : function(ttype, message, mode)
-    {
-        var toastEvent = $A.get("e.force:showToast");
-        toastEvent.setParams({
-                                 "type": ttype,
-                                 "mode": mode || "dismissible",
-                                 "message": message
-                             });
-        toastEvent.fire();
+    hlpShowToast : function(component, ttype, args){
+        console.log(JSON.stringify(args));
+        component.find('notifierlib').showToast({
+            'mode' : args.mode || 'sticky',
+            'message' : args.msg,
+            'duration' : args.duration,
+            'variant' : ttype
+        });
     },
 
     /**
      * show the spinner
      * @param component
      */
-    hlpShowSpinner : function(component) {
-        component.set("v.spinnerClass", '');
+    hlpShowSpinner : function(component, args) {
+        var sp = component.find('mySpinner');
+        sp.set('v.size', args.size || 'large');
+        $A.util.removeClass(sp, 'slds-hide');
     },
 
     /**
      * hide the spinner
      * @param component
      */
-    hlpHideSpinner : function(component) {
-        component.set("v.spinnerClass", 'slds-hide');
+    hlpHideSpinner : function(component, args) {
+        var sp = component.find('mySpinner');
+        sp.set('v.size', args.size || 'large');
+        $A.util.addClass(sp, 'slds-hide');
     },
+
+    /**
+     * inits the action attribute with the device info
+     * @param  {[type]} component [component]
+     * @return {[type]}           [description]
+     */
+    initActionObject : function(component) {
+        var di = component.get('v.deviceinfoName')
+        component.set('v.actionParams',{di : JSON.stringify(component.get('v.deviceinfo'))});
+    }
 })
