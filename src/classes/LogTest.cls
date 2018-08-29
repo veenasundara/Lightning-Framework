@@ -45,7 +45,10 @@ public class LogTest {
         Application_Error__c ae = [Select Id, Running_User__c, Type__c, Process__c from Application_Error__c];
         System.assertEquals(UserInfo.getUserId(),ae.Running_User__c);
         System.assertEquals('LogTest.LogTestException',ae.Type__c);
-        System.assertEquals('null',ae.Process__c);
+        System.assertEquals(null,ae.Process__c);
+
+        ContentDocumentLink[] lstCl = [SELECT Id, LinkedEntityId FROM ContentDocumentLink WHERE LinkedEntityId = :ae.Id];
+        system.assertEquals(1, lstCl.size());
 
         DeviceInformation lla2 = DeviceInformation.deserialize(JSON.serialize(deviceInfo));
         System.assert(deviceInfo.browser == lla2.browser);

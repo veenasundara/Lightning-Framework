@@ -201,16 +201,22 @@ public with sharing class Log
         Database.insert(ae,opts);
 
         // if insert was successful and there are log lstLogEntry,
-        // store log in attachments. breadcrumbs could be truncated
+        // store log in a file. breadcrumbs could be truncated
         // so this allows full debug log
         if(ae.Id != null && !lstLogEntry.isEmpty())
         {
             ae.RecalculateFormulas();
-            Attachment a = new Attachment();
-            a.ParentId = ae.Id;
-            a.Name = ae.Id + '.log';
-            a.Body = Blob.valueOf(ae.Breadcrumbs__c);
-            Database.insert(a,false);
+
+            ContentVersion cv = new ContentVersion();
+            cv.VersionData = Blob.valueOf(ae.Breadcrumbs__c);
+            cv.Title = ae.Id + '.log';
+            cv.PathOnClient = ae.Id + '.log';
+            Database.insert(cv,false);
+            ContentDocumentLink cdl = new ContentDocumentLink();
+            cdl.ContentDocumentId = [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id =: cv.Id].ContentDocumentId;
+            cdl.LinkedEntityId = ae.Id;
+            cdl.ShareType = 'V';
+            Database.insert(cdl,false);
         }
     }
 

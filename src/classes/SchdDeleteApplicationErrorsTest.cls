@@ -41,10 +41,10 @@ public class SchdDeleteApplicationErrorsTest {
         update new Application_Error__c[]{ae1,ae2,ae3,ae4,ae5,ae6,ae7};
 
 
-        Attachment a1 = createAttachment(ae1.Id);
-        Attachment a2 = createAttachment(ae2.Id);
-        Attachment a3 = createAttachment(ae3.Id);
-        insert new Attachment[]{a1,a2,a3};
+        createFile(ae1.Id);
+        createFile(ae2.Id);
+        createFile(ae3.Id);
+
     }
     /**
      * instanciates new Application Error record
@@ -67,16 +67,21 @@ public class SchdDeleteApplicationErrorsTest {
         return ae;
     }
     /**
-     * instanciates new attachment
+     * Creates file and relates it to parent
      * @param  parent [related record id]
      * @return        [Attachment]
      */
-    public static Attachment createAttachment(Id parent){
-        Attachment a = new Attachment();
-        a.Name = 'test.txt';
-        a.ParentId = parent;
-        a.Body = Blob.valueOf('Test');
-        return a;
+    public static void createFile(Id parent){
+        ContentVersion cv = new ContentVersion();
+        cv.VersionData = Blob.valueOf('Test');
+        cv.Title = parent + '.log';
+        cv.PathOnClient = parent + '.log';
+        Database.insert(cv,false);
+        ContentDocumentLink cdl = new ContentDocumentLink();
+        cdl.ContentDocumentId = [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id =: cv.Id].ContentDocumentId;
+        cdl.LinkedEntityId = parent;
+        cdl.ShareType = 'V';
+        Database.insert(cdl,false);
     }
 
     //test methods
@@ -87,7 +92,8 @@ public class SchdDeleteApplicationErrorsTest {
         Test.stopTest();
 
         System.assertEquals(1,[Select count() from Application_Error__c]);
-        System.assertEquals(0,[Select count() from Attachment]);
+        Application_Error__c ae = [Select Id from Application_Error__c];
+        System.assertEquals(0,[Select count() from ContentDocumentLink Where LinkedEntityId = :ae.Id]);
     }
 
     static testMethod void schedulebatch() {
